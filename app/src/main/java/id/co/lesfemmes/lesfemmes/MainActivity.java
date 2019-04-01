@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -35,10 +34,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import org.json.JSONException;
@@ -85,18 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         sess = new Session_model(this);
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w("Asdf", "getInstanceId failed", task.getException());
-                            return;
-                        }
-                        String token = task.getResult().getToken();
-                        Log.d("TOKEN", token);
-                    }
-                });
+
 
         urlactive = geturlactive();
         sess_username = sess.getUsername();
@@ -142,11 +126,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     try {
                         JSONObject jsonObj              = new JSONObject(response);
                         String userimage                = jsonObj.getString("userimage");
-                        GlideApp.with(MainActivity.this).load(urlactive+"assets/userprofil/"+userimage)
-                                .override(300, 300)
-                                .dontAnimate()
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .into(imageView);
+                        if (!userimage.equals("")) {
+                            GlideApp.with(MainActivity.this).load(urlactive + "assets/userprofil/" + userimage)
+                                    .override(300, 300)
+                                    .dontAnimate()
+                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                    .into(imageView);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -310,7 +296,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             updateNotificationsBadge(mNotificationsCount);
         }
     };
-
     private BroadcastReceiver openNotificationEvent = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -319,7 +304,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             updateNotificationsBadge(mNotificationsCount);
         }
     };
-
      public void updateNotificationsBadge(int count) {
         mNotificationsCount = count;
         this.invalidateOptionsMenu();

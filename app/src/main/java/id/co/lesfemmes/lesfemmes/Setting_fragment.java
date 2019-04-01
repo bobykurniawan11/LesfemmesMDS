@@ -262,7 +262,7 @@ public class Setting_fragment extends Fragment {
                         conn.setRequestProperty("Connection", "Keep-Alive");
                         conn.setRequestProperty("ENCTYPE","multipart/form-data");
                         conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-                        conn.setRequestProperty("uploadedfile", image.toString());
+                        conn.setRequestProperty("uploadedfile", image);
                         conn.setRequestProperty("username", username);
                         dos = new DataOutputStream(conn.getOutputStream());
                         dos.writeBytes(twoHyphens + boundary + lineEnd);
@@ -351,11 +351,13 @@ public class Setting_fragment extends Fragment {
                     try {
                         JSONObject jsonObj              = new JSONObject(response);
                         String userimage                = jsonObj.getString("userimage");
-                        GlideApp.with(getActivity()).load(urlactive+"assets/userprofil/"+userimage)
-                                .override(300, 300)
-                                .dontAnimate()
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .into(profileImage);
+                        if (!userimage.equals("")) {
+                            GlideApp.with(getActivity()).load(urlactive + "assets/userprofil/" + userimage)
+                                    .override(300, 300)
+                                    .dontAnimate()
+                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                    .into(profileImage);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
