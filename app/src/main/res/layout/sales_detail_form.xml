@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/abuabu">
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+   >
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/frameSKU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="No SKU"
+        >
+        <AutoCompleteTextView
+            android:hint="No SKU"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:id="@+id/skuInputField"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+
+
+    <CheckBox
+        android:layout_below="@id/frameSKU"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/isGWP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GWP" />
+
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/frameItemCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/frameSKU"
+        android:hint="Kode Item"
+        >
+        <AutoCompleteTextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:id="@+id/ItemCodeInput"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/populateHarga"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/frameItemCode"
+        android:layout_toEndOf="@id/frameItemCode"
+        android:layout_toRightOf="@id/frameItemCode"
+        android:text=""
+        android:background="@drawable/ico_down"/>
+
+    <TextView
+        android:id="@+id/tvPromo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text=" Promotion (Discount) :"
+        android:textColor="@color/primaryDarkColor"
+        android:drawableLeft="@drawable/ico_promotion"
+        android:layout_below="@id/frameItemCode"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        />
+
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/promotion"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tvPromo"
+        android:spinnerMode="dropdown"
+        />
+
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text=" Harga Jual :"
+        android:textColor="@color/primaryDarkColor"
+        android:drawableLeft="@drawable/ico_rupiah"
+        android:layout_below="@id/promotion"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/ItemPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPrice"
+        android:layout_alignStart="@+id/frameItemCode"
+        android:layout_alignLeft="@+id/frameItemCode"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/tvQty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text=" Quantity :"
+        android:textColor="@color/primaryDarkColor"
+        android:drawableLeft="@drawable/ico_quantity"
+        android:layout_below="@id/ItemPrice"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <EditText
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/quantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvQty"
+        android:layout_alignStart="@+id/frameItemCode"
+        android:layout_alignLeft="@id/frameItemCode"
+        android:inputType="number"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="Quantity" />
+
+    <TextView
+        android:id="@+id/tvSubTotal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text=" Sub Total :"
+        android:textColor="@color/primaryDarkColor"
+        android:drawableLeft="@drawable/ico_rupiah"
+        android:layout_below="@id/quantity"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/subtotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSubTotal"
+        android:layout_alignStart="@+id/frameItemCode"
+        android:layout_alignLeft="@id/frameItemCode"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/tvTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text=" Yang Harus Dibayar :"
+        android:textColor="@color/primaryDarkColor"
+        android:drawableLeft="@drawable/ico_rupiah"
+        android:drawableStart="@drawable/ico_rupiah"
+        android:layout_below="@id/subtotal"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <ImageView
+        android:layout_below="@id/subtotal"
+        android:layout_toEndOf="@id/tvTotal"
+        android:layout_toRightOf="@id/tvTotal"
+        android:id="@+id/iconedit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_mode_edit"
+        android:foregroundGravity="center"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:id="@+id/tagihan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTotal"
+        android:textSize="18sp"
+        android:inputType="number"
+        android:layout_alignStart="@+id/frameItemCode"
+        android:layout_alignLeft="@id/frameItemCode"
+        android:layout_marginTop="5dp"
+      />
+
+    <TextView
+        android:layout_below="@id/tagihan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/catatanTV"
+        android:text="Catatan"
+        />
+
+    <EditText
+        android:layout_below="@id/catatanTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/catatan"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:lines="2"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan"
+        android:textColor="@color/primaryTextColor"
+        android:id="@+id/simpanDetail"
+        android:layout_below="@id/catatan"
+        android:background="@color/primaryDarkColor"
+        android:layout_margin="10dp"
+        />
+
+</RelativeLayout>
+
+</ScrollView>

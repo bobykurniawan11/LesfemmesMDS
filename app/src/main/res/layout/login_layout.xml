@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:whatever="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/logo_hitam" />
+
+    <com.andreabaccega.widget.FormEditText
+        android:layout_marginTop="50dp"
+        android:layout_below="@id/logo"
+        android:id="@+id/username_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:drawablePadding="10dp"
+        android:textSize="25sp"
+        android:hint="@string/username_nik"
+        android:inputType="text"
+        whatever:emptyErrorString="Harap isi bagian ini"
+        />
+
+    <com.andreabaccega.widget.FormEditText
+        android:layout_marginTop="10dp"
+        android:id="@+id/password_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_below="@id/username_tv"
+        android:drawablePadding="10dp"
+        android:textSize="25sp"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        whatever:emptyErrorString="Harap isi bagian ini"
+
+        />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/login_btn"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/round_button"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="@string/login"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        />
+
+
+</RelativeLayout>

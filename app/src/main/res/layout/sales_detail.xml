@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    tools:context=".sales.Sales_detail"
+    android:background="@color/abuabu">
+
+
+
+    <TextView
+        android:textSize="18sp"
+        android:width="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tanggal_nota_label"
+        android:text=" Tanggal Nota "
+        android:drawableLeft="@drawable/ico_calendar"
+        />
+    <TextView
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/tanggal_nota_label"
+        android:layout_toRightOf="@id/tanggal_nota_label"
+        android:id="@+id/tanggal_nota"
+        android:text="2018-01-01"
+        />
+
+    <TextView
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Outlet Code"
+        android:layout_below="@id/tanggal_nota_label"
+        android:id="@+id/outletcode_label"
+        android:width="200dp"
+        android:drawableLeft="@drawable/ico_note"
+        />
+
+    <TextView
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/outletcode"
+        android:layout_toEndOf="@id/outletcode_label"
+        android:layout_toRightOf="@id/outletcode_label"
+        android:layout_below="@id/tanggal_nota"
+        android:text="M-MM"
+        />
+
+    <TextView
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/penjual_label"
+        android:text=" Penjual"
+        android:layout_below="@id/outletcode_label"
+        android:width="200dp"
+        android:drawableLeft="@drawable/ico_contact"
+        />
+
+    <TextView
+        android:id="@+id/seller"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:layout_toEndOf="@id/penjual_label"
+        android:layout_toRightOf="@id/penjual_label"
+        android:layout_below="@id/outletcode"
+        />
+
+    <TextView
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/grandtotal_label"
+        android:text="Grand Total"
+        android:layout_below="@id/seller"
+        android:width="200dp"
+        android:drawableLeft="@drawable/ico_contact"
+        />
+
+    <TextView
+        android:id="@+id/grandtotal"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:layout_toEndOf="@id/penjual_label"
+        android:layout_toRightOf="@id/penjual_label"
+        android:layout_below="@id/seller"
+        />
+
+
+
+    <Button
+        android:id="@+id/posting"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Posting"
+        android:textColor="@color/primaryTextColor"
+        android:layout_below="@id/grandtotal"
+        android:background="@color/primaryDarkColor"
+        />
+
+
+    <View
+        android:id="@+id/divider"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/posting"
+        style="@style/Divider"/>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:orientation="horizontal"
+        android:id="@+id/sales_detail"
+        android:layout_below="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

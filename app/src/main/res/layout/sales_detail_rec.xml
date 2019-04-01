@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginBottom="25dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
+
+    >
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="@color/abuabu"
+    >
+
+    <TextView
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/NoSKU_label"
+        android:text="No SKU"
+        android:width="100dp"
+        />
+
+    <TextView
+        android:id="@+id/NoSKU"
+        android:textSize="14sp"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="No SKU"
+        android:layout_toEndOf="@id/total_label"
+        android:layout_toRightOf="@id/total_label"
+        android:textColor="@color/primaryDarkColor"
+        />
+
+    <TextView
+        android:layout_below="@id/NoSKU_label"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/itemcode_label"
+        android:text="Item Code"
+        android:width="100dp"
+        />
+
+    <TextView
+        android:layout_below="@id/NoSKU_label"
+        android:textSize="14sp"
+        android:layout_toEndOf="@id/itemcode_label"
+        android:layout_toRightOf="@id/itemcode_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/itemcode"
+        android:text="Default No"
+        android:textColor="@color/primaryDarkColor"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:textSize="14sp"
+        android:width="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/harga_label"
+        android:layout_below="@id/itemcode_label"
+        android:text="Harga"
+        />
+    <TextView
+        android:textSize="14sp"
+        android:layout_below="@id/itemcode_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/harga_label"
+        android:layout_toRightOf="@id/harga_label"
+        android:id="@+id/harga"
+        android:text="2018-01-01"
+        android:textColor="@color/primaryDarkColor"
+        />
+
+    <TextView
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Disc"
+        android:layout_below="@id/harga_label"
+        android:id="@+id/disc_label"
+        android:width="100dp"
+        />
+
+    <TextView
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/disc"
+        android:layout_toEndOf="@id/disc_label"
+        android:layout_toRightOf="@id/disc_label"
+        android:layout_below="@id/harga_label"
+        android:text="M-MM"
+        android:textColor="@color/primaryDarkColor"
+        />
+
+    <TextView
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/qty_label"
+        android:text="Quantity"
+        android:layout_below="@id/disc_label"
+        android:width="100dp"
+        />
+
+    <TextView
+        android:id="@+id/qty"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantity"
+        android:layout_toEndOf="@id/qty_label"
+        android:layout_toRightOf="@id/qty_label"
+        android:layout_below="@id/disc"
+        android:textColor="@color/primaryDarkColor"
+        />
+
+    <TextView
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/total_label"
+        android:text="Total"
+        android:layout_below="@id/qty"
+        android:width="100dp"
+        />
+
+    <TextView
+        android:id="@+id/total"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Boby"
+        android:layout_toEndOf="@id/total_label"
+        android:layout_toRightOf="@id/total_label"
+        android:layout_below="@id/qty"
+        android:textColor="@color/primaryDarkColor"
+        />
+
+    <TextView
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/note_label"
+        android:text="Catatan"
+        android:layout_below="@id/total"
+        android:width="100dp"
+        />
+
+    <TextView
+        android:id="@+id/note"
+        android:textSize="14sp"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Catatan"
+        android:layout_toEndOf="@id/total_label"
+        android:layout_toRightOf="@id/total_label"
+        android:layout_below="@id/total"
+        android:textColor="@color/primaryDarkColor"
+        />
+
+
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/note"
+        android:id="@+id/deleteIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Tahan untuk menghapus"
+        android:drawableLeft="@drawable/ico_trash"
+        />
+
+
+</RelativeLayout>
+
+</android.support.v7.widget.CardView>

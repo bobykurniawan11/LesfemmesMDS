@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:whatever="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/abuabu">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:whatever="http://schemas.android.com/apk/res-auto"
+        android:paddingTop="50dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        >
+
+        <TextView
+            android:id="@+id/tvOutlet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Outlet :"
+            android:textColor="@color/primaryDarkColor"
+            android:drawableLeft="@drawable/ico_note"
+            android:drawableStart="@drawable/ico_note"
+            android:drawablePadding="5dip"
+
+            />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/OutletCode_input_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/tvOutlet"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:id="@+id/tvTanggal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Tanggal Transaksi :"
+            android:textColor="@color/primaryDarkColor"
+            android:drawableLeft="@drawable/ico_calendar"
+            android:drawableStart="@drawable/ico_calendar"
+            android:layout_below="@+id/OutletCode_input_et"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:drawablePadding="5dip"
+
+            />
+
+        <com.andreabaccega.widget.FormEditText
+            whatever:emptyErrorString="Harap isi bagian ini"
+            android:layout_below="@id/tvTanggal"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="Mohon isi tanggal penjualan"
+            android:id="@+id/tanggal_transaksi_et"
+            android:layout_marginTop="5dp"
+            />
+
+        <Button
+            android:layout_centerHorizontal="true"
+            android:id="@+id/opendialog"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignBaseline="@+id/tanggal_transaksi_et"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/tanggal_transaksi_et"
+            android:layout_toRightOf="@+id/tanggal_transaksi_et"
+            android:text="."
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ico_calendar"
+            />
+
+
+
+        <Spinner
+            android:layout_marginTop="5dp"
+            android:spinnerMode="dialog"
+            android:layout_below="@id/tanggal_transaksi_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner" />
+
+
+        <Button
+            android:id="@+id/saveButton_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinner"
+            android:layout_alignParentBottom="true"
+            android:background="@color/primaryDarkColor"
+            android:text="Next Step"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginTop="30dp"/>
+
+    </RelativeLayout>
+
+</ScrollView>
+
+

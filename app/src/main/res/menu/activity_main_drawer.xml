@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/main"
+            android:icon="@drawable/ic_dashboard"
+            android:title="Dashboard" />
+        <!--<item-->
+            <!--android:id="@+id/items"-->
+            <!--android:icon="@drawable/ic_folder"-->
+            <!--android:title="Item Merchandise" />-->
+        <item
+            android:id="@+id/nav_omset"
+            android:icon="@drawable/ic_show_chart"
+            android:title="Chart" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_action_settings"
+            android:title="Pengaturan" />
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_action_help"
+            android:title="Cara Penggunaan" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_exit_to_app"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+</menu>

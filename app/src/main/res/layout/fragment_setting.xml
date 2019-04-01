@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Setting_fragment">
+    <RelativeLayout
+        android:layout_width="@dimen/toolbar_profile_width"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/imageframe"
+        android:layout_height="wrap_content">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/profileImage"
+            android:layout_width="@dimen/toolbar_profile_width"
+            android:layout_height="@dimen/toolbar_profile_height"
+            android:layout_marginTop="@dimen/activity_padding"
+            android:layout_marginBottom="@dimen/activity_padding"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_launcher_round"
+            app:civ_border_color="@android:color/white"
+            app:civ_shadow="true"
+            app:civ_border_width="2dp"
+            app:civ_shadow_radius="1"
+            />
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/img_plus"
+            android:layout_width="@dimen/ic_plus_width"
+            android:layout_height="@dimen/ic_plus_width"
+            android:layout_alignBottom="@id/profileImage"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_mode_edit"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="1" />
+    </RelativeLayout>
+
+
+
+
+   <LinearLayout
+       android:id="@+id/frameName"
+       android:layout_marginTop="50dp"
+       android:layout_marginStart="50dp"
+       android:layout_marginLeft="50dp"
+       android:layout_below="@+id/imageframe"
+       android:orientation="horizontal"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
+       <TextView
+           android:padding="5dp"
+           android:width="180dp"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Nama Lengkap"
+           android:textAlignment="textStart"
+           android:gravity="start"
+           />
+       <TextView
+           android:id="@+id/fullname"
+           android:padding="5dp"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="DefaultName"
+           />
+   </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/frameOutlet"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_below="@+id/frameName"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:width="180dp"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Outlet Code"
+            android:textAlignment="textStart"
+            android:layout_gravity="start"
+            />
+        <TextView
+            android:id="@+id/outlet"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DefaultName"
+            />
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/tombolGanti"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/frameOutlet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ubah Password"
+        />
+
+</RelativeLayout>

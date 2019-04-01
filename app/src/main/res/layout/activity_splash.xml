@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <ImageView
+        android:contentDescription="@string/my_logo"
+        android:layout_centerInParent="true"
+        android:id="@+id/splashscreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/logo_hitam" />
+
+    <TextView
+        android:id="@+id/consigmentText"
+    android:layout_marginTop="5dp"
+    android:layout_centerInParent="true"
+    android:layout_below="@+id/splashscreen"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/consignment"/>
+
+
+    <TextView
+        android:layout_centerInParent="true"
+        android:id="@+id/appVersion"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        />
+
+</RelativeLayout>

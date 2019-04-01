@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Omset_fragment">
+
+
+    <LinearLayout
+
+        android:id="@+id/searchframe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        android:paddingStart="50dp"
+        android:paddingLeft="50dp"
+        android:paddingEnd="20dp"
+        android:paddingRight="20dp">
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/outlet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:spinnerMode="dropdown" />
+
+        <EditText
+            android:id="@+id/bulan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/outlet"
+            android:hint="10"
+            android:maxLength="2" />
+
+        <EditText
+            android:id="@+id/tahun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/bulan"
+            android:hint="2019"
+            android:maxLength="4" />
+
+        <Button
+            android:id="@+id/finddata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/tahun"
+            android:inputType="number"
+            android:text="Cari data" />
+
+    </LinearLayout>
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:layout_margin="30dp"
+        android:padding="20dp"
+        android:layout_below="@id/searchframe"
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

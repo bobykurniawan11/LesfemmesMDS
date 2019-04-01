@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:padding="10dp"
+      >
+        <android.support.design.widget.TextInputLayout
+            android:layout_marginTop="20dp"
+            android:id="@+id/frameItemCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:hint="Kode Item"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/ItemCodeInput"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tambahkan_item"
+            android:layout_below="@id/frameItemCode"
+            />
+
+        <ImageView
+            android:id="@+id/deleteIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_close" />
+
+    </RelativeLayout>
+
