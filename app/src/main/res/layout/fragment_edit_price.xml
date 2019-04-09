@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditPrice">
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/titt"
+        android:layout_marginTop="10dp"
+        android:text="Pilih tanggal dan outlet. \n \n Setelah menambahkan, outlet dapat mengubah harga akhir dari transaksi"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:layout_below="@+id/titt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:id="@+id/searchForm"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:padding="10dp"
+            android:id="@+id/outlet"
+            android:layout_gravity="center_vertical"
+            android:dropDownVerticalOffset="50dp"
+            android:dropDownHorizontalOffset="50dp"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:spinnerMode="dropdown"
+            android:layout_below="@+id/tvOutlet" />
+
+        <Button
+            android:id="@+id/AddBtn"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tambah" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/List"
+        android:layout_below="@id/searchForm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</RelativeLayout>

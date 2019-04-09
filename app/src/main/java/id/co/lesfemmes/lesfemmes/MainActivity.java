@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FloatingActionButton fab;
     String urlactive;
     CircularImageView imageView;
+    Integer sess_isAllowed;
     private SharedPreferences sharedPreferences;
 
     public String geturlactive(){
@@ -81,13 +82,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         sess = new Session_model(this);
 
-
         urlactive = geturlactive();
         sess_username = sess.getUsername();
         sess_fullname = sess.getFullname();
         sess_outlet = sess.getOutlet();
         sess_image = sess.getImagepath();
+        sess_isAllowed = sess.getAllow_editprice();
         setSupportActionBar(toolbar);
+
         mNotificationsCount = 0;
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -112,11 +114,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TextView navUsername                        = headerView.findViewById(R.id.name);
         TextView navOutlet                          = headerView.findViewById(R.id.outlet);
         imageView                                   = headerView.findViewById(R.id.imageView);
+
         getImage();
         navUsername.setText(sess_username + " - " + sess_fullname);
         navOutlet.setText(sess_outlet);
         handleSSLHandshake();
         getCountNotification();
+        Menu nav_Menu = navigationView.getMenu();
+        if (sess_isAllowed == 1) {
+            nav_Menu.findItem(R.id.nav_allowEditSett).setVisible(true);
+        } else {
+            nav_Menu.findItem(R.id.nav_allowEditSett).setVisible(false);
+        }
     }
 
     public void getImage(){
@@ -187,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return super.onOptionsItemSelected(item);
     }
+
     @SuppressLint("TrulyRandom")
     public static void handleSSLHandshake() {
         try {
@@ -254,6 +264,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
             finish();
             return true;
+        } else if (id == R.id.nav_allowEditSett) {
+            hideFloatingActionButton();
+            setCustomActionbar("Pengaturan Ubah Harga");
+            fragment = new EditPrice();
         }
 
         if (fragment != null) {
@@ -296,6 +310,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             updateNotificationsBadge(mNotificationsCount);
         }
     };
+
     private BroadcastReceiver openNotificationEvent = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

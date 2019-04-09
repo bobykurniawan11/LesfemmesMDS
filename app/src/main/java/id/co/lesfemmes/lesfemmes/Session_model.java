@@ -9,6 +9,7 @@ public class Session_model {
     String outlet;
     String kodeposisi;
     String namaposisi;
+    Integer allow_editprice;
 
     public String getImagepath() {
         return imagepath;
@@ -29,11 +30,12 @@ public class Session_model {
         namaposisi  = loginPreferences.getString("namaposisi_session","");
         namaposisi  = loginPreferences.getString("namaposisi_session","");
         imagepath   = loginPreferences.getString("image_session","");
+        allow_editprice = loginPreferences.getInt("allow_editprice", 0);
     }
+
     public String getProfilImage() {
         return imagepath;
     }
-
     public String getUsername() {
         return username;
     }
@@ -42,6 +44,10 @@ public class Session_model {
     }
     public String getOutlet() {
         return outlet;
+    }
+
+    public Integer getAllow_editprice() {
+        return allow_editprice;
     }
     public String getKodeposisi() {
         return kodeposisi;

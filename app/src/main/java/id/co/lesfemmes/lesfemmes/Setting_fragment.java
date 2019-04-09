@@ -57,13 +57,6 @@ import java.util.Map;
 
 
 public class Setting_fragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private static final int SELECT_PICTURE = 1;
     CircularImageView profileImage;
     String urlactive,username;
@@ -78,22 +71,7 @@ public class Setting_fragment extends Fragment {
     Session_model sess_model;
     public Setting_fragment() {}
 
-    public static Setting_fragment newInstance(String param1, String param2) {
-        Setting_fragment fragment = new Setting_fragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
@@ -229,8 +207,6 @@ public class Setting_fragment extends Fragment {
                     Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
-                //final Uri imageUri = data.getData();
-
             }
         }
     }
@@ -328,7 +304,6 @@ public class Setting_fragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
         @Override
         protected void onPreExecute() {

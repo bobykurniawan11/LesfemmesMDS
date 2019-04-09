@@ -88,14 +88,16 @@ public class Login_activity extends AppCompatActivity {
                 response -> {
                     progressDialog.dismiss();
                     try {
-                        JSONObject jsonObj      = new JSONObject(response);
-                        Integer status          = jsonObj.getInt("status");
-                        String fullname_db      = jsonObj.getJSONObject("datauser").getString("fullname");
-                        String username_db      = jsonObj.getJSONObject("datauser").getString("username");
-                        String outlete_db       = jsonObj.getJSONObject("datauser").getString("outlet");
-                        String userimagee_db    = jsonObj.getJSONObject("datauser").getString("userimage");
-                        String posisie_db       = jsonObj.getJSONObject("datauser").getString("posisi");
-                        String namaposisie_db   = jsonObj.getJSONObject("datauser").getString("namaposisi");
+                        Log.d("ABCD", response);
+                        JSONObject jsonObj = new JSONObject(response);
+                        Integer status = jsonObj.getInt("status");
+                        String fullname_db = jsonObj.getJSONObject("datauser").getString("fullname");
+                        String username_db = jsonObj.getJSONObject("datauser").getString("username");
+                        String outlete_db = jsonObj.getJSONObject("datauser").getString("outlet");
+                        String userimagee_db = jsonObj.getJSONObject("datauser").getString("userimage");
+                        String posisie_db = jsonObj.getJSONObject("datauser").getString("posisi");
+                        String namaposisie_db = jsonObj.getJSONObject("datauser").getString("namaposisi");
+                        Integer allow_editprice = jsonObj.getJSONObject("datauser").getInt("allow_editprice");
                         if(status == 1)
                         {
                             username_tv.setText("");
@@ -107,6 +109,7 @@ public class Login_activity extends AppCompatActivity {
                             editor.putString("image_session", userimagee_db);
                             editor.putString("posisi_session", posisie_db);
                             editor.putString("namaposisi_session", namaposisie_db);
+                            editor.putInt("allow_editprice", allow_editprice);
                             editor.apply();
                             Intent intent = new Intent(Login_activity.this, MainActivity.class);
                             startActivity(intent);

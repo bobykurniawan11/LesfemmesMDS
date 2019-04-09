@@ -16,6 +16,12 @@
             android:id="@+id/nav_omset"
             android:icon="@drawable/ic_show_chart"
             android:title="Chart" />
+
+        <item
+            android:id="@+id/nav_allowEditSett"
+            android:icon="@drawable/ic_keyboard"
+            android:title="Pengaturan Ubah Harga" />
+
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_action_settings"
