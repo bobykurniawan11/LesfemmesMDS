@@ -11,12 +11,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/titt"
         android:layout_marginTop="10dp"
-        android:text="Pilih tanggal dan outlet. \n \n Setelah menambahkan, outlet dapat mengubah harga akhir dari transaksi"
+        android:text="Pilih tanggal dan outlet. \n \n Setelah menambahkan, outlet dapat mengubah harga akhir dari transaksi \n \n Tekan lama untuk menghapus..."
         android:gravity="center" />
 
     <LinearLayout
+        android:layout_marginBottom="10dp"
         android:layout_below="@+id/titt"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="50dp"
         android:id="@+id/searchForm"
         android:orientation="horizontal"
@@ -30,22 +32,59 @@
             android:dropDownVerticalOffset="50dp"
             android:dropDownHorizontalOffset="50dp"
             android:layout_width="150dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:spinnerMode="dropdown"
             android:layout_below="@+id/tvOutlet" />
 
+        <EditText
+            android:inputType="number"
+            android:id="@+id/bulan"
+            android:hint="04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:inputType="number"
+            android:id="@id/tahun"
+            android:hint="2019"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <Button
-            android:id="@+id/AddBtn"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_gravity="center"
+            android:id="@+id/searchBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tambah" />
+            android:src="@drawable/ico_search"
+            android:drawableLeft="@drawable/ico_search"
+            android:drawableStart="@drawable/ico_search"
+            android:text="Cari"
+
+            />
+
+
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/List"
+    <Button
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/searchForm"
+        android:id="@+id/AddBtn"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tambah" />
+
+
+    <android.support.v7.widget.RecyclerView
+
+        android:layout_below="@id/AddBtn"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/rc_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

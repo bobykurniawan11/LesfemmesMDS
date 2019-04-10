@@ -136,7 +136,7 @@ public class Sales_form_detail extends Fragment {
 
         populateHarga = v.findViewById(R.id.populateHarga);
         iconedit = v.findViewById(R.id.iconedit);
-       // tagihanlabelframe = v.findViewById(R.id.tagihanlabelframe);
+
 
         subtotalTV = v.findViewById(R.id.subtotal);
         promotionSpinner = v.findViewById(R.id.promotion);
@@ -211,7 +211,6 @@ public class Sales_form_detail extends Fragment {
                         dialog.cancel();
                     }
                 });
-
                 builder.show();
             }
         });
