@@ -181,6 +181,8 @@
         />
 
     <ImageView
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_below="@id/subtotal"
         android:layout_toEndOf="@id/tvTotal"
         android:layout_toRightOf="@id/tvTotal"

@@ -196,8 +196,8 @@ public class Sales_form_detail extends Fragment {
                             Toast.makeText(getActivity(), "Harap isi field yang tersedia !!!", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            tagihan = Double.parseDouble(input.getText().toString());
-                            tagihanTV.setText(input.getText().toString());
+                            tagihan = Double.parseDouble(String.valueOf(input.getText().toString()));
+                            tagihanTV.setText(currencyFormat(input.getText().toString()));
                             isEditTotal = 1;
                             catatanTV.setVisibility(View.VISIBLE);
                             catatan.setVisibility(View.VISIBLE);
@@ -374,6 +374,7 @@ public class Sales_form_detail extends Fragment {
                 saveDetail();
             }
         });
+        checkAllowed();
     }
     public void hitungTotal(){
         try{
@@ -720,4 +721,33 @@ public class Sales_form_detail extends Fragment {
         queue.add(postRequest);
     }
 
+    private void checkAllowed() {
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlactive + "Welcomebaru/checkAllowed/" + OutletCode + "/" + TanggalNota,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObj = new JSONObject(response);
+                            Integer IsError = jsonObj.getInt("Status");
+                            if (IsError == 1) {
+                                iconedit.setVisibility(View.VISIBLE);
+                            }
+                            progressDialog.hide();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            progressDialog.hide();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+            }
+        }
+        );
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(stringRequest);
+    }
 }
