@@ -2,6 +2,7 @@ package id.co.lesfemmes.lesfemmes.sales;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -31,10 +32,10 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -59,6 +60,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +76,7 @@ public class Sales_form_detail extends Fragment {
     AutoCompleteTextView itemcode,skuInputField;
     private ArrayList<Item_model> itemList;
     RequestQueue queue;
-    String NoNota,TanggalNota,OutletCode,ItemCodeValue;
+    String TanggalNota, OutletCode;
     String usingSpecial,usingLifetime,lifetimepromotipe,specialpromotipe,subtotal;
     Integer specialDisc, lifetimeDisc;
     TextView hargaItemTV,subtotalTV,tagihanTV;
@@ -83,7 +85,6 @@ public class Sales_form_detail extends Fragment {
     String HargaItem,Seller,NoSku,StatusPosting;
     Integer selectedPromotion,QuantityVal;
     protected List<Promotion_model> spinnerData;
-    List<Promotion_model> listData;
     Spinner promotionSpinner;
     ProgressDialog progressDialog;
     Button simpanDetail;
@@ -94,7 +95,6 @@ public class Sales_form_detail extends Fragment {
     String urlactive;
     Session_model sess_model;
     ImageView iconedit;
-    LinearLayout tagihanlabelframe;
     TextView tvPromo;
 
     Integer isEditTotal;
@@ -103,6 +103,8 @@ public class Sales_form_detail extends Fragment {
     String catatanvalue;
     CheckBox gwpCheckbox;
     boolean isGwp;
+
+    String jammenit;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.sales_detail_form, container, false);
@@ -117,11 +119,9 @@ public class Sales_form_detail extends Fragment {
         Seller          = getArguments().getString("Seller");
 
         StatusPosting   = getArguments().getString("StatusPosting");
-
         selectedPromotion = 0;
         QuantityVal = 0;
         gwpCheckbox = v.findViewById(R.id.isGWP);
-
         gwpCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -133,7 +133,6 @@ public class Sales_form_detail extends Fragment {
                     populateItemPrice();
             }
         });
-
         populateHarga = v.findViewById(R.id.populateHarga);
         iconedit = v.findViewById(R.id.iconedit);
 
@@ -163,9 +162,8 @@ public class Sales_form_detail extends Fragment {
         tagihanTV.setVisibility(View.GONE);
         quantityTV.setVisibility(View.GONE);
         simpanDetail.setVisibility(View.GONE);
-        //tagihanlabelframe.setVisibility(View.GONE);
         hargaItemTV.setVisibility(View.GONE);
-
+        jammenit = "00:00";
         MainActivity ma = new MainActivity();
         urlactive = ma.geturlactive();
 
@@ -178,16 +176,13 @@ public class Sales_form_detail extends Fragment {
         skuInputField.setThreshold(1);
         skuInputField.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         progressDialog = new ProgressDialog(getActivity());
-
         iconedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("Ubah Total Penjualan");
-
                 final EditText input = new EditText(getContext());
                 input.setInputType( InputType.TYPE_CLASS_NUMBER );
-
                 builder.setView(input);
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -314,7 +309,6 @@ public class Sales_form_detail extends Fragment {
 
             }
         });
-
         itemcode.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -342,12 +336,9 @@ public class Sales_form_detail extends Fragment {
                 isEditTotal = 0;
                 catatanTV.setVisibility(View.GONE);
                 catatan.setVisibility(View.GONE);
-
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
         quantityTV.addTextChangedListener(new TextWatcher() {
@@ -371,7 +362,20 @@ public class Sales_form_detail extends Fragment {
                     return;
                 }
 
-                saveDetail();
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        jammenit = selectedHour + ":" + selectedMinute;
+                        saveDetail();
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+
             }
         });
         checkAllowed();
@@ -422,7 +426,6 @@ public class Sales_form_detail extends Fragment {
                         HargaItem               = "0";
                         TipePromosi             = "";
                         discAmount              = 0;
-
 
                         subtotalTV.setOnClickListener(null);
                         try {
@@ -591,8 +594,6 @@ public class Sales_form_detail extends Fragment {
                 return;
             }
         }
-
-
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Menyimpan ...");
         progressDialog.setCancelable(false);
@@ -600,7 +601,7 @@ public class Sales_form_detail extends Fragment {
         //yang dibutuhkan
         // OutletCode, No Nota, tanggalNota, ItemCode, KodePromosi ,harga asli, harga setelah discount,Qty
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        StringRequest postRequest = new StringRequest(Request.Method.POST, urlactive+"Welcomebaru/savesalesDetail/",
+        StringRequest postRequest = new StringRequest(Request.Method.POST, urlactive + "Welcomebaru/savesalesDetail2/",
                 new Response.Listener<String>()
                 {
                     @Override
@@ -616,7 +617,6 @@ public class Sales_form_detail extends Fragment {
                                 bundle.putString("Seller", Seller);
                                 bundle.putString("TransactionDate", TanggalNota);
                                 bundle.putString("StatusPosting", StatusPosting);
-
                                 Sales_detail fragobj=new Sales_detail();
                                 fragobj.setArguments(bundle);
                                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
@@ -640,14 +640,11 @@ public class Sales_form_detail extends Fragment {
                                     bundle.putString("TanggalNota", TanggalNota);
                                     bundle.putString("Seller", Seller);
                                     bundle.putString("StatusPosting", StatusPosting);
-
                                     Sales_form_detail fragobj=new Sales_form_detail();
                                     fragobj.setArguments(bundle);
                                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-
                                     ft.replace(R.id.content_frame, fragobj);
                                     getActivity().getSupportFragmentManager().popBackStack();
-
                                     ft.commit();
                                 }
                             })
@@ -678,11 +675,9 @@ public class Sales_form_detail extends Fragment {
                                         bundle.putString("OutletCode", OutletCode);
                                         bundle.putString("TanggalNota", TanggalNota);
                                         bundle.putString("StatusPosting", StatusPosting);
-
                                         Sales_form_detail fragobj=new Sales_form_detail();
                                         fragobj.setArguments(bundle);
                                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-
                                         ft.replace(R.id.content_frame, fragobj);
                                         getActivity().getSupportFragmentManager().popBackStack();
 
@@ -714,6 +709,7 @@ public class Sales_form_detail extends Fragment {
                 params.put("CreatedBy",sess_model.getUsername());
                 params.put("NoSku",NoSku);
                 params.put("Catatan",catatanvalue);
+                params.put("jammenit", jammenit);
                 return params;
             }
         };

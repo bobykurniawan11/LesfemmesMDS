@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -50,18 +48,13 @@ import id.co.lesfemmes.lesfemmes.Seller_model;
 import id.co.lesfemmes.lesfemmes.Session_model;
 
 public class Sales_input extends Fragment implements  View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
-    Fragment fragment = null;
-
-    Snackbar snackbar;
     private Calendar calendar;
     Session_model sess;
     FormEditText tanggal_transaksi_et;
-    EditText nonota_et;
     Button saveButton_btn;
     Button opendatedialog;
     private int mYear, mMonth, mDay;
     ProgressDialog progressDialog;
-
     protected List<Seller_model> spinnerData;
     protected List<Outlet_model> spinnerDataOutlet;
     Calendar c;
@@ -141,6 +134,8 @@ public class Sales_input extends Fragment implements  View.OnClickListener, Navi
            datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
             datePickerDialog.show();
         }
+
+
         if(v == saveButton_btn){
             progressDialog              = new ProgressDialog(getActivity());
             progressDialog.setMessage("Harap tunggu");
@@ -275,5 +270,4 @@ public class Sales_input extends Fragment implements  View.OnClickListener, Navi
         postRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(postRequest);
     }
-
 }

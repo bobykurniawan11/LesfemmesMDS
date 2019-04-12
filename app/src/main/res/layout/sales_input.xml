@@ -25,7 +25,6 @@
             android:drawableLeft="@drawable/ico_note"
             android:drawableStart="@drawable/ico_note"
             android:drawablePadding="5dip"
-
             />
 
         <android.support.v7.widget.AppCompatSpinner
@@ -48,9 +47,8 @@
             android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:drawablePadding="5dip"
+            android:drawablePadding="5dip" />
 
-            />
 
         <com.andreabaccega.widget.FormEditText
             whatever:emptyErrorString="Harap isi bagian ini"
@@ -76,7 +74,6 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/ico_calendar"
             />
-
 
 
         <Spinner

@@ -179,7 +179,6 @@ Button posting;
                         }).show();
             }
         });
-
         posting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
