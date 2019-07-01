@@ -2,7 +2,6 @@ package id.co.lesfemmes.lesfemmes.sales;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -35,7 +34,6 @@ import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -60,7 +58,6 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -191,7 +188,7 @@ public class Sales_form_detail extends Fragment {
                             Toast.makeText(getActivity(), "Harap isi field yang tersedia !!!", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            tagihan = Double.parseDouble(String.valueOf(input.getText().toString()));
+                            tagihan = Double.parseDouble(input.getText().toString());
                             tagihanTV.setText(currencyFormat(input.getText().toString()));
                             isEditTotal = 1;
                             catatanTV.setVisibility(View.VISIBLE);
@@ -362,19 +359,7 @@ public class Sales_form_detail extends Fragment {
                     return;
                 }
 
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        jammenit = selectedHour + ":" + selectedMinute;
-                        saveDetail();
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
+                saveDetail();
 
             }
         });
@@ -392,7 +377,6 @@ public class Sales_form_detail extends Fragment {
             tagihanTV.setText(currencyFormat(String.valueOf(tagihan)));
         }
     }
-
     public static void hideSoftKeyboard (Activity activity, View view) {
         InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
@@ -442,7 +426,7 @@ public class Sales_form_detail extends Fragment {
                                 TipePromosi = "SpecialPrice";
                                 tvPromo.setVisibility(View.GONE);
                                 if(specialpromotipe.equalsIgnoreCase("nominal")){
-                                    double sub = Double.parseDouble(HargaItem) - specialDisc;
+                                    double sub = specialDisc;
                                     newsubtotal = sub;
                                 }else if(specialpromotipe.equalsIgnoreCase("persen")){
                                     double subtotal = (Integer.parseInt(HargaItem) / 100.0f) * specialDisc;
@@ -601,7 +585,7 @@ public class Sales_form_detail extends Fragment {
         //yang dibutuhkan
         // OutletCode, No Nota, tanggalNota, ItemCode, KodePromosi ,harga asli, harga setelah discount,Qty
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        StringRequest postRequest = new StringRequest(Request.Method.POST, urlactive + "Welcomebaru/savesalesDetail2/",
+        StringRequest postRequest = new StringRequest(Request.Method.POST, urlactive + "Welcomebaru/savesalesDetail/",
                 new Response.Listener<String>()
                 {
                     @Override
@@ -709,16 +693,13 @@ public class Sales_form_detail extends Fragment {
                 params.put("CreatedBy",sess_model.getUsername());
                 params.put("NoSku",NoSku);
                 params.put("Catatan",catatanvalue);
-                params.put("jammenit", jammenit);
                 return params;
             }
         };
         postRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(postRequest);
     }
-
     private void checkAllowed() {
-
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, urlactive + "Welcomebaru/checkAllowed/" + OutletCode + "/" + TanggalNota,
                 new Response.Listener<String>() {

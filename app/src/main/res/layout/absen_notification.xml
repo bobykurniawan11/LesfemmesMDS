@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="25dp">
+
+    <TextView
+        android:id="@+id/nik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Nik"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/nama"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nik"
+
+        android:text="Nama"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/alamat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nama"
+
+        android:text="Alamat"
+        android:textSize="15sp" />
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/your_Radio_group_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alamat"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radio_masuk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jam Masuk" />
+
+        <RadioButton
+            android:id="@+id/radio_keluar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jam Keluar" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/okButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/your_Radio_group_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="OK" />
+
+</RelativeLayout>

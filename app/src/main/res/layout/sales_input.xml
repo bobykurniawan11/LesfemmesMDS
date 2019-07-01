@@ -53,9 +53,9 @@
         <com.andreabaccega.widget.FormEditText
             whatever:emptyErrorString="Harap isi bagian ini"
             android:layout_below="@id/tvTanggal"
-            android:layout_width="300dp"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:hint="Mohon isi tanggal penjualan"
+            android:hint="Tanggal penjualan"
             android:id="@+id/tanggal_transaksi_et"
             android:layout_marginTop="5dp"
             />

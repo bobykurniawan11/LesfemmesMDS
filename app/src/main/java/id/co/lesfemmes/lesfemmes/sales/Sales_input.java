@@ -119,7 +119,6 @@ public class Sales_input extends Fragment implements  View.OnClickListener, Navi
     public void onClick(View v) {
         if (v == opendatedialog) {
             c = Calendar.getInstance();
-
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -134,7 +133,6 @@ public class Sales_input extends Fragment implements  View.OnClickListener, Navi
            datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
             datePickerDialog.show();
         }
-
 
         if(v == saveButton_btn){
             progressDialog              = new ProgressDialog(getActivity());

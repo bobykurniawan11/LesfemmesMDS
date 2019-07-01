@@ -35,21 +35,18 @@
             android:layout_height="wrap_content"
             android:spinnerMode="dropdown"
             android:layout_below="@+id/tvOutlet" />
-
         <EditText
             android:inputType="number"
             android:id="@+id/bulan"
             android:hint="04"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
         <EditText
             android:inputType="number"
             android:id="@id/tahun"
             android:hint="2019"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
         <Button
             android:background="?android:attr/selectableItemBackground"
             android:layout_marginLeft="5dp"
@@ -62,15 +59,41 @@
             android:drawableLeft="@drawable/ico_search"
             android:drawableStart="@drawable/ico_search"
             android:text="Cari"
-
             />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/containerDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchForm"
+        android:layout_centerHorizontal="true">
+
+        <EditText
+            android:id="@+id/fromDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            android:hint="Dari" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="10dp"
+            android:layout_height="0dp" />
+
+        <EditText
+            android:id="@+id/toDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            android:hint="Sampai" />
 
     </LinearLayout>
 
+
     <Button
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/searchForm"
+        android:layout_below="@id/containerDate"
         android:id="@+id/AddBtn"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"

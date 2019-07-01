@@ -86,6 +86,7 @@ public class Dashboard_fragment extends Fragment implements SwipeRefreshLayout.O
     String requestFrom;
     SwipeRefreshLayout mSwipeRefreshLayout;
     MainActivity mYourActiviy;
+    String sess_username;
 
     public Dashboard_fragment() {}
 
@@ -104,7 +105,11 @@ public class Dashboard_fragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public void onResume() {
         super.onResume();
-        fab.show();
+        if (sess_username.equals("0601338.")) {
+            fab.hide();
+        } else {
+            fab.show();
+        }
         mYourActiviy = (MainActivity) getActivity();
         mYourActiviy.setCustomActionbar("Dashboard");
     }
@@ -124,6 +129,8 @@ public class Dashboard_fragment extends Fragment implements SwipeRefreshLayout.O
         sess_model = new Session_model(getContext());
         mAdapter = new Sales_header_adapter(headerList);
         progressDialog = new ProgressDialog(getActivity());
+
+        sess_username = sess_model.getUsername();
 
         spinner = v.findViewById(R.id.outlet);
         tanggal_et = v.findViewById(R.id.tanggal_et);
@@ -146,7 +153,13 @@ public class Dashboard_fragment extends Fragment implements SwipeRefreshLayout.O
                 ft.commit();
             }
         });
-        fab.show();
+
+        if (sess_username.equals("0601338.")) {
+            fab.hide();
+        } else {
+            fab.show();
+        }
+
         mAdapter.setOnItemClickListener(new Sales_header_adapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
@@ -220,7 +233,6 @@ public class Dashboard_fragment extends Fragment implements SwipeRefreshLayout.O
                                                   int monthOfYear, int dayOfMonth) {
                                 tanggal_et.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                             }
-
                         }, mYear, mMonth, mDay);
 
                 datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {

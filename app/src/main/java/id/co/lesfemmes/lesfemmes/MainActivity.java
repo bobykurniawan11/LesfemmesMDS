@@ -51,6 +51,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import id.co.lesfemmes.lesfemmes.absen.Absen_fragment;
 import id.co.lesfemmes.lesfemmes.custom.Utils;
 import id.co.lesfemmes.lesfemmes.dashboard.Dashboard_fragment;
 import id.co.lesfemmes.lesfemmes.notification.Notification_fragment;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SharedPreferences sharedPreferences;
 
     public String geturlactive(){
-        return "https://XXXXXXXXXXXXX/";
+        return "http://192.168.3.223:84/lesfemmesapi/";
     }
 
     public void setCustomActionbar(String myCustomTitle){
@@ -268,6 +269,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             hideFloatingActionButton();
             setCustomActionbar("Pengaturan Ubah Harga");
             fragment = new EditPrice();
+        } else if (id == R.id.absen) {
+            hideFloatingActionButton();
+            setCustomActionbar("Pengaturan Ubah Harga");
+            fragment = new Absen_fragment();
         }
 
         if (fragment != null) {

@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -58,6 +59,7 @@ public class EditPrice extends Fragment {
     RecyclerView recyclerView;
 
     EditText bulanET, tahunET;
+    String tanggalAwalVal, tanggalAkhirVal;
 
     private List<EditPrice_model> editList;
     private EditPrice_adapter mAdapter;
@@ -100,7 +102,8 @@ public class EditPrice extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-
+        TextView tanggal_awal = v.findViewById(R.id.fromDate);
+        TextView tanggal_akhir = v.findViewById(R.id.toDate);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -137,34 +140,11 @@ public class EditPrice extends Fragment {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getWindow().setSoftInputMode(
-                        WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                final Calendar c = Calendar.getInstance();
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
-                datePickerDialog = new DatePickerDialog(getActivity(),
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                theDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                                CustomerCode = spinner.getSelectedItem().toString();
-                                progressDialog.setMessage("...");
-                                progressDialog.setCancelable(false);
-                                progressDialog.show();
-                                save();
-                            }
-                        }, mYear, mMonth, mDay);
-
-                datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == DialogInterface.BUTTON_NEGATIVE) {
-
-                        }
-                    }
-                });
-                datePickerDialog.show();
+                tanggalAwalVal = tanggal_awal.getText().toString();
+                tanggalAkhirVal = tanggal_akhir.getText().toString();
+                theDate = tanggalAwalVal + " - " + tanggalAkhirVal;
+                progressDialog.show();
+                save();
             }
         });
 
@@ -181,6 +161,61 @@ public class EditPrice extends Fragment {
                 delete();
             }
         });
+
+        tanggal_awal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getWindow().setSoftInputMode(
+                        WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+                datePickerDialog = new DatePickerDialog(getActivity(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                tanggal_awal.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == DialogInterface.BUTTON_NEGATIVE) {
+                            tanggal_awal.setText("");
+                        }
+                    }
+                });
+                datePickerDialog.show();
+            }
+        });
+
+        tanggal_akhir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getWindow().setSoftInputMode(
+                        WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+                datePickerDialog = new DatePickerDialog(getActivity(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                tanggal_akhir.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == DialogInterface.BUTTON_NEGATIVE) {
+                            tanggal_akhir.setText("");
+                        }
+                    }
+                });
+                datePickerDialog.show();
+            }
+        });
+
         return v;
     }
     private void requestOutlet() {
@@ -251,7 +286,7 @@ public class EditPrice extends Fragment {
 
     private void save() {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlactive + "Welcomebaru/saveAllowed/" + CustomerCode + "/" + theDate + "/" + userLogin,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlactive + "Welcomebaru/saveAllowed/" + CustomerCode + "/" + tanggalAwalVal + "/" + tanggalAkhirVal + "/" + userLogin,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -273,7 +308,6 @@ public class EditPrice extends Fragment {
                         } else {
                             progressDialog.hide();
                         }
-
                     }
                 }, new Response.ErrorListener() {
             @Override
