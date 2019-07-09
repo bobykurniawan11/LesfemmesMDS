@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="25dp">
+
+    <TextView
+        android:id="@+id/nik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nik"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/nama"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nik"
+
+        android:text="Nama"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/alamat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nama"
+
+        android:text="Alamat"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tanggal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/alamat"
+
+        android:text="Tanggal : "
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/jamMask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tanggal"
+
+        android:text="Jam Masuk : "
+        android:textSize="15sp" />
+
+
+    <TextView
+        android:id="@+id/jamKlr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/jamMask"
+
+        android:text="Jam Keluar : "
+        android:textSize="15sp" />
+
+
+</RelativeLayout>

@@ -300,6 +300,7 @@ public class Dashboard_fragment extends Fragment implements SwipeRefreshLayout.O
                             if(requestFrom.equals("searchBtn")){
                                 progressDialog.dismiss();
                             }
+                            progressDialog.dismiss();
                         } catch (JSONException e) {
                             progressDialog.dismiss();
                             e.printStackTrace();

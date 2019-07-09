@@ -2,6 +2,7 @@ package id.co.lesfemmes.lesfemmes.absen;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,7 +30,7 @@ public class Absen_confirmation extends DialogFragment {
     String nik_val, alamat_val, urlactive;
     String tipe;
     String longitude, latitude;
-
+    ProgressDialog progressDialog;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
@@ -40,6 +41,11 @@ public class Absen_confirmation extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         MainActivity ma = new MainActivity();
         urlactive = ma.geturlactive();
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Menyimpan data absen");
+        progressDialog.setCancelable(false);
+
         View v = inflater.inflate(R.layout.absen_notification, container, false);
         TextView nik = v.findViewById(R.id.nik);
         TextView nama = v.findViewById(R.id.nama);
@@ -59,6 +65,7 @@ public class Absen_confirmation extends DialogFragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 saveAbsensi();
 
             }
@@ -76,18 +83,16 @@ public class Absen_confirmation extends DialogFragment {
                         break;
                 }
             }
-
         });
-
-
         return v;
     }
-
     private void saveAbsensi() {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest postRequest = new StringRequest(Request.Method.POST, urlactive + "Welcomebaru/absensi",
                 response -> {
                     Log.d("Data => ", response);
+                    progressDialog.dismiss();
+
                     dismiss();
                 },
                 error -> Log.d("ErrorResponse", error.toString())
@@ -100,7 +105,6 @@ public class Absen_confirmation extends DialogFragment {
                 params.put("tipe", tipe);
                 params.put("longitude", longitude);
                 params.put("latitude", latitude);
-
                 return params;
             }
         };

@@ -2,6 +2,7 @@ package id.co.lesfemmes.lesfemmes.absen;
 
 import android.Manifest;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,31 +16,57 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import id.co.lesfemmes.lesfemmes.MainActivity;
 import id.co.lesfemmes.lesfemmes.R;
 import id.co.lesfemmes.lesfemmes.Session_model;
 
 public class Absen_fragment extends Fragment {
+
+    View v;
+    Button goAbsen, openDate;
+    LocationManager locManager;
+    Location location;
+    double latitude, longitude;
+    Session_model sess;
+    String urlactive;
+    ProgressDialog progressDialog;
+    TextView jamMsktxt, jamKlrtxt, currentDate;
+    SimpleDateFormat formatter;
     private final LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
             updateWithNewLocation(location);
@@ -55,12 +82,7 @@ public class Absen_fragment extends Fragment {
         public void onStatusChanged(String provider, int status, Bundle extras) {
         }
     };
-    View v;
-    Button goAbsen;
-    LocationManager locManager;
-    Location location;
-    double latitude, longitude;
-    Session_model sess;
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -87,12 +109,23 @@ public class Absen_fragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_absen, container, false);
         goAbsen = v.findViewById(R.id.goAbsen);
         sess = new Session_model(getActivity());
+        MainActivity ma = new MainActivity();
+        urlactive = ma.geturlactive();
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Mempersiapkan Halaman");
+        progressDialog.setCancelable(false);
+        jamMsktxt = v.findViewById(R.id.jamMsktxt);
+        jamKlrtxt = v.findViewById(R.id.jamKlrtxt);
+        currentDate = v.findViewById(R.id.currentDate);
+        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        currentDate.setText(date);
+        populateTime();
         goAbsen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 locManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
                 Dexter.withActivity(getActivity())
-                        .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .withPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
                         .withListener(new MultiplePermissionsListener() {
                             @Override
                             public void onPermissionsChecked(MultiplePermissionsReport report) {
@@ -120,10 +153,23 @@ public class Absen_fragment extends Fragment {
                     longitude = location.getLongitude();
                     getAddress(latitude, longitude);
                 } else {
+                    showSettingsDialog();
                     Toast.makeText(getActivity(), "Gagal, Pastikan GPS anda aktif", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+        openDate = v.findViewById(R.id.openDate);
+        openDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List_absen fragobj = new List_absen();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.addToBackStack(getActivity().getSupportFragmentManager().findFragmentById(R.id.content_frame).toString());
+                ft.replace(R.id.content_frame, fragobj);
+                ft.commit();
+            }
+        });
+
         return v;
     }
 
@@ -157,7 +203,6 @@ public class Absen_fragment extends Fragment {
         }
     }
 
-
     private Boolean getAddress(double latitude, double longitude) {
         Geocoder geocoder;
         List<Address> addresses;
@@ -182,12 +227,52 @@ public class Absen_fragment extends Fragment {
             Absen_confirmation dialogFragment = new Absen_confirmation();
 
             dialogFragment.setArguments(bundle);
-            dialogFragment.setCancelable(false);
+            dialogFragment.setCancelable(true);
             dialogFragment.show(ft, "dialog");
         } catch (IOException e) {
             e.printStackTrace();
         }
         return true;
+    }
 
+    public void populateTime() {
+        progressDialog.show();
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        StringRequest postRequest = new StringRequest(Request.Method.POST, urlactive + "Welcomebaru/get_absenhariini",
+                response -> {
+                    Log.d("Data => ", response);
+                    progressDialog.dismiss();
+                    JSONObject jsonObj = null;
+                    try {
+                        jsonObj = new JSONObject(response);
+                        Integer Status = jsonObj.getInt("Status");
+
+                        if (Status == 0) {
+
+                        } else {
+                            String db_jam_masuk = jsonObj.getJSONObject("Data").getString("jam_masuk");
+                            String db_jam_keluar = jsonObj.getJSONObject("Data").getString("jam_keluar");
+                            jamMsktxt.setText("Jam Masuk Hari Ini : " + db_jam_masuk);
+                            jamKlrtxt.setText("Jam Pulang Hari Ini : " + db_jam_keluar);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                },
+                error -> {
+                    Log.d("ErrorResponse", error.toString());
+                    progressDialog.dismiss();
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("nik", sess.getUsername());
+                return params;
+            }
+        };
+        postRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(postRequest);
     }
 }

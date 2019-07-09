@@ -68,97 +68,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Integer sess_isAllowed;
     private SharedPreferences sharedPreferences;
 
-    public String geturlactive(){
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            invalidateOptionsMenu();
+            mNotificationsCount = mNotificationsCount + 1;
+            updateNotificationsBadge(mNotificationsCount);
+        }
+    };
+    private BroadcastReceiver openNotificationEvent = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            invalidateOptionsMenu();
+            mNotificationsCount = mNotificationsCount - 1;
+            updateNotificationsBadge(mNotificationsCount);
+        }
+    };
+
+    public String geturlactive() {
         return "http://192.168.3.223:84/lesfemmesapi/";
     }
 
-    public void setCustomActionbar(String myCustomTitle){
+    public void setCustomActionbar(String myCustomTitle) {
         MainActivity.this.getSupportActionBar().setTitle(myCustomTitle);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        sess = new Session_model(this);
-
-        urlactive = geturlactive();
-        sess_username = sess.getUsername();
-        sess_fullname = sess.getFullname();
-        sess_outlet = sess.getOutlet();
-        sess_image = sess.getImagepath();
-        sess_isAllowed = sess.getAllow_editprice();
-        setSupportActionBar(toolbar);
-
-        mNotificationsCount = 0;
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        Intent intent = getIntent();
-        fab = findViewById(R.id.fab);
-        if (intent.hasExtra("notifFragment")) {
-            fragment = new Notification_fragment();
-            fab.hide();
-        } else {
-            fragment = new Dashboard_fragment();
-        }
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, fragment);
-        setCustomActionbar("Dashboard");
-        ft.commit();
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerView                             = navigationView.getHeaderView(0);
-        TextView navUsername                        = headerView.findViewById(R.id.name);
-        TextView navOutlet                          = headerView.findViewById(R.id.outlet);
-        imageView                                   = headerView.findViewById(R.id.imageView);
-
-        getImage();
-        navUsername.setText(sess_username + " - " + sess_fullname);
-        navOutlet.setText(sess_outlet);
-        handleSSLHandshake();
-        getCountNotification();
-        Menu nav_Menu = navigationView.getMenu();
-        if (sess_isAllowed == 1) {
-            nav_Menu.findItem(R.id.nav_allowEditSett).setVisible(true);
-        } else {
-            nav_Menu.findItem(R.id.nav_allowEditSett).setVisible(false);
-        }
-    }
-
-    public void getImage(){
-        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-        StringRequest postRequest = new StringRequest(Request.Method.POST, urlactive+"Welcomebaru/getImage/",
-                response -> {
-                    try {
-                        JSONObject jsonObj              = new JSONObject(response);
-                        String userimage                = jsonObj.getString("userimage");
-                        if (!userimage.equals("")) {
-                            GlideApp.with(MainActivity.this).load(urlactive + "assets/userprofil/" + userimage)
-                                    .override(300, 300)
-                                    .dontAnimate()
-                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                    .into(imageView);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                },
-                error -> Log.d("ErrorResponse", error.toString())
-        ) {
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  params = new HashMap<String, String>();
-                params.put("username",sess_username);
-                return params;
-            }
-        };
-        postRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(postRequest);
     }
 
     @Override
@@ -227,6 +159,110 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } catch (Exception ignored) {
         }
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        sess = new Session_model(this);
+
+        urlactive = geturlactive();
+        sess_username = sess.getUsername();
+        sess_fullname = sess.getFullname();
+        sess_outlet = sess.getOutlet();
+        sess_image = sess.getImagepath();
+        sess_isAllowed = sess.getAllow_editprice();
+        setSupportActionBar(toolbar);
+
+        mNotificationsCount = 0;
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        Intent intent = getIntent();
+        fab = findViewById(R.id.fab);
+        if (intent.hasExtra("notifFragment")) {
+            fragment = new Notification_fragment();
+            fab.hide();
+        } else {
+            fragment = new Dashboard_fragment();
+        }
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment);
+        setCustomActionbar("Dashboard");
+        ft.commit();
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = headerView.findViewById(R.id.name);
+        TextView navOutlet = headerView.findViewById(R.id.outlet);
+        imageView = headerView.findViewById(R.id.imageView);
+
+        getImage();
+        navUsername.setText(sess_username + " - " + sess_fullname);
+        navOutlet.setText(sess_outlet);
+        handleSSLHandshake();
+        getCountNotification();
+        Menu nav_Menu = navigationView.getMenu();
+        if (sess_isAllowed == 1) {
+            nav_Menu.findItem(R.id.nav_allowEditSett).setVisible(true);
+        } else {
+            nav_Menu.findItem(R.id.nav_allowEditSett).setVisible(false);
+        }
+    }
+
+    public void showFloatingActionButton() {
+        fab.show();
+    }
+
+    public void hideFloatingActionButton() {
+        fab.hide();
+    }
+
+    public void getImage() {
+        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+        StringRequest postRequest = new StringRequest(Request.Method.POST, urlactive + "Welcomebaru/getImage/",
+                response -> {
+                    try {
+                        JSONObject jsonObj = new JSONObject(response);
+                        String userimage = jsonObj.getString("userimage");
+                        if (!userimage.equals("")) {
+                            GlideApp.with(MainActivity.this).load(urlactive + "assets/userprofil/" + userimage)
+                                    .override(300, 300)
+                                    .dontAnimate()
+                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                    .into(imageView);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Log.d("ErrorResponse", error.toString())
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", sess_username);
+                return params;
+            }
+        };
+        postRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(postRequest);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(openNotificationEvent);
+    }
+
+    @Override
+    public void onBackStackChanged() {
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -240,25 +276,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setCustomActionbar("Dashboard");
             fragment = new Dashboard_fragment();
             getSupportFragmentManager().popBackStack();
-        }
-
-        else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_manage) {
             hideFloatingActionButton();
             setCustomActionbar("Setting");
             fragment = new Setting_fragment();
-
-        } else if(id == R.id.nav_help){
+        } else if (id == R.id.nav_help) {
             Intent intentMain = new Intent(MainActivity.this, HelpActivity.class);
             MainActivity.this.startActivity(intentMain);
-        }
-
-        else if (id == R.id.nav_omset) {
+        } else if (id == R.id.nav_omset) {
             hideFloatingActionButton();
             setCustomActionbar("Omset");
             fragment = new Omset_fragment();
         } else if (id == R.id.logout) {
-
             sharedPreferences = getSharedPreferences(Login_activity.MyPREFERENCES, Context.MODE_PRIVATE);
             sharedPreferences.edit().clear().apply();
             Intent intent = new Intent(MainActivity.this, Login_activity.class);
@@ -271,10 +300,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragment = new EditPrice();
         } else if (id == R.id.absen) {
             hideFloatingActionButton();
-            setCustomActionbar("Pengaturan Ubah Harga");
+            setCustomActionbar("Absensi");
             fragment = new Absen_fragment();
         }
-
         if (fragment != null) {
             ft.replace(R.id.content_frame, fragment);
             ft.commit();
@@ -284,59 +312,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void showFloatingActionButton() {
-        fab.show();
-    }
-    public void hideFloatingActionButton() {
-        fab.hide();
-    }
     @Override
     protected void onStart() {
         super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver((mMessageReceiver),new IntentFilter("MyData"));
-        LocalBroadcastManager.getInstance(this).registerReceiver((openNotificationEvent),new IntentFilter("NotifOpen"));
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(openNotificationEvent);
+        LocalBroadcastManager.getInstance(this).registerReceiver((mMessageReceiver), new IntentFilter("MyData"));
+        LocalBroadcastManager.getInstance(this).registerReceiver((openNotificationEvent), new IntentFilter("NotifOpen"));
     }
 
-    @Override
-    public void onBackStackChanged() {
-    }
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            invalidateOptionsMenu();
-            mNotificationsCount =  mNotificationsCount + 1;
-            updateNotificationsBadge(mNotificationsCount);
-        }
-    };
-
-    private BroadcastReceiver openNotificationEvent = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            invalidateOptionsMenu();
-            mNotificationsCount =  mNotificationsCount - 1;
-            updateNotificationsBadge(mNotificationsCount);
-        }
-    };
-     public void updateNotificationsBadge(int count) {
+    public void updateNotificationsBadge(int count) {
         mNotificationsCount = count;
         this.invalidateOptionsMenu();
     }
 
-    private void getCountNotification(){
+    private void getCountNotification() {
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlactive+"Welcomebaru/getCountNotif/"+sess_outlet,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlactive + "Welcomebaru/getCountNotif/" + sess_outlet,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject data      = new JSONObject(response);
+                            JSONObject data = new JSONObject(response);
                             updateNotificationsBadge(data.getInt("totaldata"));
                         } catch (JSONException e) {
                             e.printStackTrace();

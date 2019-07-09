@@ -110,9 +110,14 @@ public class Omset_fragment extends Fragment {
                 progressDialog.show();
                 bulanInputVal= bulanInput.getText().toString();
                 tahunInputVal= tahunInput.getText().toString();
-
                 OutletCode = spinner.getSelectedItem().toString();
-                load_data_from_server();
+
+                if (OutletCode.equals("")) {
+                    Toast.makeText(getActivity(), "Oops, silahkan coba buka ulang halaman ini", Toast.LENGTH_SHORT).show();
+                } else {
+                    load_data_from_server();
+                }
+
             }
         });
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -123,7 +128,7 @@ public class Omset_fragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {}
         });
-        progressDialog.dismiss();
+
         return v;
     }
     private void requestOutlet(){
@@ -141,6 +146,7 @@ public class Omset_fragment extends Fragment {
                             Outlet_adapter spinnerAdapter = new Outlet_adapter(getActivity(), spinnerData);
                             spinner.setAdapter(spinnerAdapter);
                         }
+                        progressDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -183,7 +189,7 @@ public class Omset_fragment extends Fragment {
                             barDataSet1.setColor(Color.rgb(0, 82, 19));
                             yAxis = new ArrayList<>();
                             yAxis.add(barDataSet1);
-                            String names[]= xAxis1.toArray(new String[xAxis1.size()]);
+                            String[] names = xAxis1.toArray(new String[xAxis1.size()]);
 
                             final BarData data = new BarData(names,yAxis);
                             chart.setData(data);
